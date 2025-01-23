@@ -1,0 +1,11 @@
+<div class="container">
+  <div class="slider">
+    <img [src]="getCurrentImage()" alt="Slider Image" class="slider-image">
+  </div>
+  <div class="controls">
+    <button (click)="previous()">Previous</button>
+    <button (click)="play()">Play</button>
+    <button (click)="stop()">Stop</button>
+    <button (click)="next()">Next</button>
+  </div>
+</div>
