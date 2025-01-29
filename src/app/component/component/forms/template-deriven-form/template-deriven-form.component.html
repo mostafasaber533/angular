@@ -1,0 +1,123 @@
+<h1>{{NewProd|json}}</h1>
+<hr>
+<form #prdForm="ngForm" (ngSubmit)="AddPrd()" class="container mt-4">
+    <div class="form-floating mb-3">
+        <input type="text"
+               class="form-control"
+               id="name"
+               name="name"
+               placeholder="Enter Product Name"
+               [(ngModel)]="NewProd.name"
+               required
+               minlength="5"
+               pattern="[A-Za-z\s]{5,50}"
+               #inpName="ngModel"
+               [class.is-invalid]="inpName.invalid && (inpName.dirty || inpName.touched)">
+        <label for="name">Product Name (Minimum 5 characters)</label>
+        <div class="alert alert-danger" *ngIf="inpName.invalid && (inpName.dirty || inpName.touched)">
+            <small *ngIf="inpName.errors?.['required']">Name is required</small>
+            <small *ngIf="inpName.errors?.['minlength']">
+                Name must be at least 5 characters. Current length: {{inpName.value?.length || 0}}
+            </small>
+            <small *ngIf="inpName.errors?.['pattern']">Only letters and spaces are allowed</small>
+        </div>
+    </div>
+
+    <div class="form-floating mb-3">
+        <input type="number"
+               class="form-control"
+               id="price"
+               name="price"
+               placeholder="Enter Product Price"
+               [(ngModel)]="NewProd.price"
+               required
+               min="1"
+               #inpPrice="ngModel">
+        <label for="price">Product Price</label>
+        <div class="alert alert-danger" *ngIf="inpPrice.invalid && (inpPrice.dirty || inpPrice.touched)">
+            <small *ngIf="inpPrice.errors?.['required']">Price is required</small>
+            <small *ngIf="inpPrice.errors?.['min']">Price must be greater than 0</small>
+        </div>
+    </div>
+
+    <div class="form-floating mb-3">
+        <input type="number"
+               class="form-control"
+               id="quantity"
+               name="quantity"
+               placeholder="Enter Product Quantity"
+               [(ngModel)]="NewProd.quantity"
+               required
+               min="0"
+               max="1000"
+               #inpQuantity="ngModel">
+        <label for="quantity">Product Quantity</label>
+        <div class="alert alert-danger" *ngIf="inpQuantity.invalid && (inpQuantity.dirty || inpQuantity.touched)">
+            <small *ngIf="inpQuantity.errors?.['required']">Quantity is required</small>
+            <small *ngIf="inpQuantity.errors?.['min']">Quantity cannot be negative</small>
+        </div>
+    </div>
+
+    <div class="form-floating mb-3">
+        <textarea class="form-control"
+                  id="description"
+                  name="description"
+                  placeholder="Enter Product Description"
+                  [(ngModel)]="NewProd.description"
+                  required
+                  minlength="10"
+                  #inpDesc="ngModel"
+                  style="height: 100px"
+                  [class.is-invalid]="inpDesc.invalid && (inpDesc.dirty || inpDesc.touched)">
+        </textarea>
+        <label for="description">Product Description (Minimum 10 characters)</label>
+        <div class="alert alert-danger" *ngIf="inpDesc.invalid && (inpDesc.dirty || inpDesc.touched)">
+            <small *ngIf="inpDesc.errors?.['required']">Description is required</small>
+            <small *ngIf="inpDesc.errors?.['minlength']">
+                Description must be at least 10 characters. Current length: {{inpDesc.value?.length || 0}}
+            </small>
+        </div>
+    </div>
+
+    <div class="form-floating mb-3">
+        <input type="url"
+               class="form-control"
+               id="imageUrl"
+               name="imageUrl"
+               placeholder="Enter Image URL"
+               [(ngModel)]="NewProd.imageUrl"
+               required
+               appUrlValidator
+               #inpImage="ngModel"
+               [class.is-invalid]="inpImage.invalid && (inpImage.dirty || inpImage.touched)">
+        <label for="imageUrl">Image URL</label>
+        <div class="alert alert-danger" *ngIf="inpImage.invalid && (inpImage.dirty || inpImage.touched)">
+            <small *ngIf="inpImage.errors?.['required']">Image URL is required</small>
+            <small *ngIf="inpImage.errors?.['pattern']">Please enter a valid URL (must start with http:// or https://)</small>
+        </div>
+    </div>
+
+    <div class="form-floating mb-3">
+        <select class="form-select"
+                id="categoryId"
+                name="categoryId"
+                [(ngModel)]="NewProd.catagoryId"
+                required
+                #inpCategory="ngModel"
+                [class.is-invalid]="inpCategory.invalid && (inpCategory.dirty || inpCategory.touched)">
+            <option value="">Select a category</option>
+            <option value="1">Others</option>
+            <option value="2">Electronics</option>
+        </select>
+        <label for="categoryId">Product Category</label>
+        <div class="alert alert-danger" *ngIf="inpCategory.invalid && (inpCategory.dirty || inpCategory.touched)">
+            <small *ngIf="inpCategory.errors?.['required']">Category is required</small>
+        </div>
+    </div>
+
+    <button type="submit"
+            class="btn btn-primary w-100"
+            [disabled]="prdForm.invalid">
+        Add Product
+    </button>
+</form>

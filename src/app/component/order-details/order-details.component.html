@@ -1,0 +1,70 @@
+<h1>Product Details</h1>
+
+<div *ngIf="!prod">
+</div>
+
+<div *ngIf="prod && !isEditing" class="product-details">
+  <img [src]="prod.imageUrl" [alt]="prod.name" class="product-image" />
+  <div class="product-info">
+    <p>Product ID: {{ prod.id }}</p>
+    <p>Product Name: {{ prod.name }}</p>
+    <p>Product Price: {{ prod.price | currency }}</p>
+    <p>Product Quantity: {{ prod.quantity }}</p>
+    <p>Product Description: {{ prod.description }}</p>
+
+    <div class="button-group">
+      <button (click)="isEditing = true" class="edit-btn">Edit</button>
+      <button (click)="deleteProduct()" class="delete-btn">Delete</button>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="isEditing && prod">
+  <h2>Edit Product</h2>
+  <form (ngSubmit)="saveProduct()">
+    <div>
+      <label>Name:</label>
+      <input type="text" [(ngModel)]="prod.name" name="name" />
+    </div>
+    <div>
+      <label>Price:</label>
+      <input type="number" [(ngModel)]="prod.price" name="price" />
+    </div>
+    <div>
+      <label>Quantity:</label>
+      <input type="number" [(ngModel)]="prod.quantity" name="quantity" />
+    </div>
+    <div>
+      <label>Description:</label>
+      <textarea [(ngModel)]="prod.description" name="description"></textarea>
+    </div>
+    <button type="submit">Save</button>
+    <button type="button" (click)="isEditing = false">Cancel</button>
+  </form>
+</div>
+
+<div>
+  <h2>Add New Product</h2>
+  <form (ngSubmit)="addNewProduct()">
+    <div>
+      <label>Name:</label>
+      <input type="text" [(ngModel)]="newProduct.name" name="newName" />
+    </div>
+    <div>
+      <label>Price:</label>
+      <input type="number" [(ngModel)]="newProduct.price" name="newPrice" />
+    </div>
+    <div>
+      <label>Quantity:</label>
+      <input type="number" [(ngModel)]="newProduct.quantity" name="newQuantity" />
+    </div>
+    <div>
+      <label>Description:</label>
+      <textarea
+        [(ngModel)]="newProduct.description"
+        name="newDescription"
+      ></textarea>
+    </div>
+    <button type="submit">Add</button>
+  </form>
+</div>

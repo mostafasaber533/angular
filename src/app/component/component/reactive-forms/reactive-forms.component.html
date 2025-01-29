@@ -1,0 +1,79 @@
+<h1>{{prodForm.get('Name')?.errors|json}}</h1>
+<h1>{{Name?.errors|json}}</h1>
+
+
+<form action="" [formGroup]="prodForm">
+  <div class="form-floating mb-3">
+    <input type="text" class="form-control" id="floatingInput" placeholder="FullName" formControlName="Name">
+    <label for="floatingInput">FullName </label>
+  </div>
+<div [hidden]="Name?.valid||Name?.untouched">
+  @if(Name?.errors?.['required']){
+    <small class="alert alert-danger">Name Is Required</small>
+  }
+
+    @if(Name?.errors?.['pattern']){
+      <small class="alert alert-danger">You Should Enter 5 letters</small>
+    }
+</div>
+
+<div formGroupName="add">
+  <div class="form-floating mb-3">
+    <input type="text" class="form-control" id="floatingInput" placeholder="city" formControlName="city">
+    <label for="floatingInput">City </label>
+  </div>
+  <div class="form-floating mb-3">
+    <input type="text" class="form-control" id="floatingInput" placeholder="street" formControlName="street">
+    <label for="floatingInput">Street </label>
+  </div>
+</div>
+<div [hidden]="prodForm.get('city')?.valid||prodForm.get('city')?.untouched">
+  @if(prodForm.get('city')?.errors?.['required']){
+    <small class="alert alert-danger">city Is Required</small>
+  }
+</div>
+
+<div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+  <input type="radio" value="Social" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked formControlName="referral">
+  <label class="btn btn-outline-primary" for="btnradio1"> Social</label>
+
+
+
+  <input type="radio" value="Others" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off" formControlName="referral">
+  <label class="btn btn-outline-primary" for="btnradio3">Others</label>
+</div>
+@if (referral?.value=== 'Others') {
+  <div class="form-floating mb-3">
+    <input type="text" class="form-control" id="floatingInput" placeholder="street" formControlName="referralother">
+    <label for="floatingInput">referralother </label>
+  </div>
+}
+
+<div class="form-floating mb-3">
+  <input type="password" class="form-control" id="floatingInput" placeholder="" formControlName="password">
+  <label for="floatingInput">password </label>
+</div>
+<div class="form-floating mb-3">
+  <input type="password" class="form-control" id="floatingInput" placeholder="" formControlName="confirmpassword">
+  <label for="floatingInput">confirmpassword </label>
+</div>
+
+@if ((prodForm.get('confirmpassword')?.touched && prodForm.get('password')?.touched) && (prodForm?.errors?.['UnMatchedpassword'] || prodForm.get('confirmpassword')?.invalid)) {
+}
+<div class="alert alert-danger">
+  @if (prodForm.get('confirmpassword')?.errors?.['required']) {
+    <small>
+      Password confirmation is required
+    </small>
+  }
+
+@if (prodForm?.errors?.['UnMatchedpassword']){
+  <small>
+    Password confirmation Must Matcheded
+  </small>
+}
+</div>
+
+
+  <button class="btn btn-dark w-100" [disabled]="prodForm.invalid">Submit</button>
+</form>
